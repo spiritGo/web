@@ -1,0 +1,161 @@
+笔记
+
+1.检测对象中是否存在
+
+    +-----------------------------------------------------
+	| '属性名' in 对象  ->  存在返回true，否则false
+	| 对象.hasOwnProperty('属性名'); -> 存在返回true，否则false
+	| 对象.属性名 === undefined -> 存在返回false，否则true
+	+-----------------------------------------------------------
+
+2.对比原始类型和引用类型
+	原始类型存储在栈内存中
+	引用类型存储在堆内存中，自动生成一个地址，保存在了栈内存
+	如果要销毁堆内存中的数据，只要设置为null即可
+
+3.数组
+	数组就是由多个元素（数据）组成的集合
+	每个元素就代表一个数组
+
+	（1）创建数组 ---> 数组字面量
+		[元素1,...]
+		访问数组中的元素，使用下标，下标是从0开始
+			数组[下标]
+
+	（2）创建数组 ---> 内置构造函数
+		new Array(元素，元素，...)
+		new Array(5); 5代表初始化的长度，可加可不加，后期可以添加更多元素
+
+	（3）数组的长度
+		数组.length
+		添加一个新的元素
+			数组名称[数组名称.length] = 值;
+
+		数组中最后一个元素的下标 
+			数组.length-1
+
+	练习：创建空数组，在末尾添加4个国家的名称，打印最后一个元素
+		var nation = new Array();
+		nation[nation.length] = '中国';
+		nation[nation.length] = '法国';
+		nation[nation.length] = '美国';
+		nation[nation.length] = '俄罗斯';
+		console.log(nation[nation.length-1]);
+
+		（4）数组的分类
+			索引数组：以数字作为下标
+			关联数组：以字符串作为下标，只能单独添加元素
+			var emp =[];
+			emp["ename"] = "Tom"
+
+		（5）遍历数组中的元素
+			遍历数组的元素使用遍历下标
+
+			+-------------------------------------
+			| for-in
+			| for(var key in 数组){
+			| 	key代表下标
+			| 	数组[key]下标对应的元素
+			| }
+			| 既可以遍历索引数组，也可以遍历关联数组
+| 			+---------------------------------------
+			| for循环
+			| for(var i=0;i<数组.length;i++){
+			| 	i代表下标
+			| 	数组[i]   下标对应的元素
+			| }
+			| 只能遍历索引数组
+			+----------------------------------------
+
+			练习：创建数组，保存若干个成绩，使用遍历数组元素，让每个成绩加10
+			var score = [100,101,102,103,102];
+			for(var s in score){
+				score[s]+=10;
+			}
+			console.log(score);
+
+			练习：创建函数getTotal,传递1个参数（数组），高寒有若干个员工工资，返回工资的总数
+			var emp = [80,90,60,10,12];
+			function getTotal(emp){
+				var sum = 0;
+				for(var e in emp){
+					sum+=emp[e];
+				}
+					sum/=emp.length;
+
+					console.log(sum);
+			}
+
+			练习：创建函数getCount，传递2个参数（数组，字符串），返回字符串在数组中出现的次数
+			getCount([])
+
+			function getCount(sum,name){
+				for(var i= 0,count = 0;i<sum.length;i++){
+					if(sum[i]==name){
+						count++;
+					}
+				}
+				return count;
+			}
+
+			console.log(getCount(["Tom","Lucy","Tom","Kate"],"Tom"));
+
+
+			练习：创建函数getMax();传递1个参数（数组），包含若干个数组，返回最大值
+			getMax(arr){
+				for(var i = 0,temp = 0;i<arr.length;i++){
+					if(arr[i]>arr[i+1])temp = arr[i];
+				}
+
+				return temp;
+			}
+
+			getMax([70,69,34,56,25]);
+
+		（6）数组中的方法（api）application process interface
+
+			+-----------------------------------------------
+			| api-应用程序编程接口，预定以好的方法、函数
+			|                                   
+			| toString() 将数组中的元素转为字符串，按逗号分隔
+			| join("-") 将数组中的元素转为字符串，指定分隔符
+			| concat(arr1,arr2,...) 拼接两个或者更多个数组
+			| slice(start,end) 截取数组中的元素，start开始的下标 end结束的下标
+			| splice(start,deleteCount,...插入的数据); 删除数组中的元素
+			| reverse(); 翻转数组中的元素
+			| sort([callback]); 对数组中的元素进行排序，默认是按照Unicode码从小到大
+ 			+--------------------------------------------------------------
+
+			练习：创建多个数组，每个元素含有一个字母，拼接这3个数组，转字符串
+			var arr = ["Tom1","Tom2"];
+			var arr1 = ["Tom3","Tom4"];
+			var arr2 = ["Tom5","Tom6"];
+			var bigArr = arr.concat(arr1,arr2);
+			console.log(bigArr.toString);
+
+			console.log(arr.splice(1));
+			arr.splice(1);
+
+			练习：创建数组，保存a~h，每个字母为一个元素，删除出c,d;
+			替换f为m，在下标为1的位置插入元素z
+
+			var arr = ["a","b","c","d","e","f","g","h"];
+			arr.splite(2,2);
+			arr.splite(1,0,z);
+
+课后练习：
+	1.复习
+	2.练习
+		使用遍历数组元素实现翻转数组中的元素，不是使用reverse
+		[a,b,c,d] -> [d,c,b,a]
+		学习冒泡排序
+	3.预习字符串对象及其api
+
+	function reversei(arr){
+		for(var i=0;i<arr.length;i++){
+		arr.splice(0,0,arr[arr.length-1]);
+			arr.slice(arr.length-1);
+		}
+		return arr;
+	}
+	console.log(reversei([a,b,c,d]));

@@ -1,0 +1,25 @@
+笔记
+
+1. 创建一个服务器、
+	var http = require("http");
+
+	http.createServer(function(request,response){
+		response.writeHead(200,{"Content-Type":"text/plain"});
+
+		response.end("hello world");
+	}).listen(8888);
+
+	运行即可！！
+
+2.node.js REPL(交互式解释器)
+	node ...
+
+3.回调函数
+	阻塞代码案例
+
+	var fs = require("fs");
+
+	var data = fs.readFileSync("路径");
+
+	console.log(data.toString());
+	

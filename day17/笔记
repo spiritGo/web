@@ -1,0 +1,29 @@
+笔记
+
+1. fs模块
+	（1）创建目录
+		fs.mkdir(目录路径，callback)/mkdirSync(目录路径)
+
+	（2）删除目录
+		fs.rmdir(目录路径，callback)/rmdirSync(目录路径)
+
+	（3）读取目录
+		fs.readdir(目录路径，callback)/readdirSync(目录路径);
+
+	（4）判断文件是否存在
+		fs.existsSync(路径)  存在返回true 否返回false   异步已废弃，别用
+
+	（5）创建文件、写入文件
+		fs.writeFile("路径",数据,callback);/fs.writeFileSync(路径,数据);
+		如果文件不存在，会创建文件，如果文件存在，会清空内容，然后再写入
+		fs.appendFile("路径",数据,callback);/fs.appendFileSync(路径，数据);
+		如果文件不存在，会创建文件，如果文件存在，会在末尾追加写入
+
+
+
+
+
+	---------------------------练习-------------------------------
+	练习：使用文件操作创建文件data.txt,写入一个对象
+	var person = {eid:1,ename:"tom",sex:"男"}
+	fs.writeFileSync("data.txt",person);

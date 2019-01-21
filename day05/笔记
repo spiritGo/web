@@ -1,0 +1,173 @@
+笔记	
+
+	（3）非空约束-not null
+	声明了非空约束	NOT NULL
+	（4）默认值约束-default
+		可以使用DEFAULT关键字来声明默认值，有两种方式可以应用默认值
+		INSERT INTO laptop VALUES(4,...DEFAULT,..);
+		INSERT INTO laptop(title...) VALUTS(title...);
+		没有指定的列就会设置为默认值
+
+	（5）检查约束 - check
+		create table student(
+			age tinyint check(age>=18 and age=<60)检查约束
+		);
+
+		mysql不支持检查约束，会降低数据的插入速度
+
+	（6）外键约束 - foreign key
+	另起一行，foreign key(列名) references 另一个表（主键）;
+	声明了外键约束的列，取值必须在另一个表的主键上出现过，列类型也要保持一致，
+	取值可以为null
+	foreign key(family) references laptop_family(fid)
+
+2. mysql中的自动增列
+	auto_increment,自动增长，假如一个列上声明了自增列，无需手动赋值，直接设置为null，获取去当前的最大值，然后加1插入
+	注意：
+		自增列允许手动赋值
+		只实用于整数型的主键上
+
+数据库中的存储时期时间使用距离计算机元年（1970-1-1 0:0:0）的毫秒数，使用js可以获取任意的日期时间类型。要使用bigint列类型来存储
+
+3.简单查询
+	（1）查询特定的列
+		实例：查询出所有员工的姓名/工资/生日
+		select ename,salary,birthday from emp;
+
+	（2）查询所有的列
+		select * from emp;
+
+	（3）给列起别名；
+		查询所有员工的姓名和工资
+		select ename as 姓名,salary as 工资 from emp;
+		注意：as 关键字可以省略，但必须保留空格；
+
+	*（4）只显示不同的记录/合并相同的记录
+		实例：查询出员工所在的部门有哪些；
+		select distinct deptId from emp;
+
+	（5）查询的时候执行计算
+		实例：计算2*15-18/6+3
+		select 2*15-18/6+3;
+		实例：查询出所有员工的姓名及其年薪
+		select ename ,salary*12 from emp;
+		eg:假设每个员工的工资涨500，年终奖每个5000，计算年薪，起汉字别名
+		select ename,(salary+500)*12+5000 as 年薪 from emp;
+
+	（6）查询结果集排序
+		eg:查询出所有的部门，结果按照编号由小到大
+		select * from dept order by did asc;升序#ascendant
+		select * from dept order by did desc;降序#descendant
+		练习：查询所有员工信息，结果按照工资从大到小排序；
+		select * from emp order by salary desc;降序
+
+		查询所有的员工信息，结果按照姓名中的字母从a~z排序
+		 select * from emp order by ename;默认升序asc
+
+		 order by 可以按照数值/字符串/日期来排序
+		 默认是按照升序asc来排列的
+
+		 练习：按照个Jon工资升序排列，如果工资相同按照姓名排列
+		 select * from emp order by salary,ename asc;
+
+		 按照工资降序排列，要求所有的女员工显示在前面
+		 select * from emp order by sex,salary desc;
+
+	（7）条件查询
+		 练习：查询出编号为5的员工所有信息
+		 select * from emp where eid=5;
+
+		 练习：查询出姓名为king的员工的编号/工资/生日
+		 select eid,salary,birthday from emp where ename="king";
+
+		 练习：查询出20号部门下所有员工的信息
+		 select * from emp where deptId=20;
+
+		 练习；查询所有的男员工的信息
+		 select * from emp where sex=1;
+
+		 练习：工资在5000以上的所有信息
+		 select * from emp where salary>=5000;
+
+		 比较运算符（>  <  <=  >=  =  !=）
+
+		 练习：查询“1991-1-1”后出生的员工所有信息
+		 select * from emp where birthday > "1991-1-1";
+
+		 练习：查询出不在10号部门的员工的所有信息
+		 select * from emp where deptId != 10;
+
+		 练习：查询出没有明确部门的员工的所有信息
+		 select * from emp where deptId is NULL;
+
+		 练习：查询出有明确部门的员工的所有信息
+		 select * from emp where deptId is not NULL;
+
+		 练习：工资大于6000以上的所有的女员工
+		 select * from emp where sex=0 and salary > 6000;
+
+		* 练习：查询出工资在5000~8000之间所有员工的信息
+		 select * from emp where salary>=5000 and salary<=8000;
+		 select * from emp where salary between 5000 and 8000; 
+
+		* 练习：查询出工资不在5000~8000之间的员工信息
+		 select * from emp where salary <5000 or salary > 8000;
+		 select * from emp where salary not between 5000 and 8000;
+
+		* 练习：查询出1990年之前和1993年之后出生的员工的所有信息
+		 select * from emp where birthday <"1990-1-1" or birthday > "1993-12-31";
+		 select * from emp where not birthday between "1990-1-1" and "1993-12-31"; 
+
+		 练习：查询出1993年出生的员工的所有信息
+		 select * from emp where birthday >= "1993-1-1" and birthday <= "1993-12-31";
+		 select * from emp where birthday between "1993-1-1" and "1993-12-31";
+
+		 练习：20号和30号部门的所有员工
+		 select * from emp where deptId=20 or deptId=30;
+		 select * from emp where deptId in(20,30);
+
+		 练习：不在20号和30号部门的所有员工
+		 select * from emp where deptId != 20 and deptId != 30;
+		 select * from emp where deptId not in(20,30);
+
+		 注意：
+		 and / or
+		 between ... and ... / not between ... and ...
+		 is null / is not null
+		 in / not in
+
+	（8）分页查询
+		假如查询的结果集有太多的数据，一次显示不完，可以分页显示。
+		需要有两个条件：当前页码、每页的数据量
+
+	*	select * from emp limit start,count;
+		start:是一个数字，从结果集的那一条开始查询
+		count:是一个数字，表示每一页的页数
+
+	*	每页开始的算法
+		start = (页码-1)*count;
+		假设每一页显示5条数据
+		第一页：select * from emp limit 0,5;
+		第二页：select * from emp limit 5,5;
+		...
+
+		假设每一页显示7条数据，查询前三页的SQL
+		select * from emp limit 0,7;	0*7 
+		select * from emp limit 7,7;	1*7
+		select * from emp limit 14,7;	2*7
+
+		注意：start（开始）和count（每页的数据量）不能是字符串格式，必须是整数
+
+课后任务：
+（1）复习今天的内容，删除代码，保留注释重新编写SQL语句
+（2）练习：
+	查询出工资8000以上的女员工的姓名、性别、生日、结果集按照工资的降序排列取前两个人
+	尝试创建学子数据库
+	select ename,sex,birthday from emp where salary >8000 and sex=0 order by salary desc limit 0,2;
+
+
+
+
+
+
+

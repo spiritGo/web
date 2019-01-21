@@ -1,0 +1,59 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>index.html</title>
+	<style>
+		body,html{
+			width:100%;
+			margin:0;
+			padding:0;
+		}
+
+		.container{
+			width:80%;
+			margin:50px auto;
+			border:2px #999 solid;
+			box-shadow:0 0 8px #999;
+			padding:20px;
+		}
+
+		.a_desc {
+			text-decoration:none;
+			background-color:lightblue;
+			border-radius:6px;
+			display:block;
+			padding:6px 10px;
+		}	
+
+		.a_desc:hover {
+			opacity:.8;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<fieldset><legend>spirit</legend>
+		<div class="a_container"></div>
+		</fieldset>
+	</div>
+	
+	<script>
+		var a_link = [
+			"TopSpeeder.html",
+		];
+	</script>
+
+	<script>
+		var a_container = document.getElementsByClassName("a_container")[0];
+		a_link.forEach(function(value,i){
+			var a = document.createElement("a");
+			a.className= "a_desc";
+			a.innerText = value;
+			a.href = value;
+			a_container.append(a);
+			
+		});
+	</script>
+</body>
+</html>

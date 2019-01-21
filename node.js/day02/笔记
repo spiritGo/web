@@ -1,0 +1,40 @@
+笔记
+
+1. 非阻塞代码实例：
+	var fs = require("fs");
+	fs.readFile("路径",function(err,data){
+		if(err) return console.error(err);
+		console.log(data.toString);
+	});
+
+	console.log("程序执行结束");
+
+	+---------------------------------------------------------
+	| 注意：阻塞调用是按顺序执行的代码，非阻塞调用是不按顺序执行代码
+	+-----------------------------------------------------------
+
+	//引入模块
+	var event = require("events");
+
+	//创建对象
+	var eventEmitter = new event.EventEmitter();
+
+	//创建事件处理程序
+	var connectHandler = function connected(){
+		console.log("连接成功");
+		eventEmitter.emit("data_received");
+	}
+
+	eventEmitter.on("connection",connectHandler);
+
+	eventEmitter.on("data_received",function(){
+		console.log("数据接收成功");
+	});
+
+	eventEmitter.emit("connection");
+	console.log("执行结束");
+
+
+
+
+

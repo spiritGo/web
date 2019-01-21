@@ -1,0 +1,126 @@
+笔记
+
+1. 数组的api
+
+	+--------------------------------------------
+	| push() 在数组的末尾添加元素，返回数组的长度
+	| pop() 在数组的末尾删除元素，返回删除的元素
+	| unshift() 在数组的开头添加元素，返回数组的长度
+	| shift() 在数组的开头删除元素，返回删除的元素
+	+------------------------------------------------
+
+2. 二维数组
+	数组中的而每个元素也是数组
+	var city = [[],[],[]];
+	访问二维数组中的元素 city[下标][下标];
+
+3. 字符串操作
+	包装对象：目的就是让原始类型的数据也可以像引用类型数据一样，具有一组属性和方法
+	js中提供了3种包装对象：String、number、boolean
+	将任意的数据转为字符串
+	new String(); 返回一个object
+	String() 返回string
+	用法上是一致的
+
+	（1） 转义字符 --- \
+		装换字符本身的意义
+		\n 将字符n转成了换行符
+		\' 将引号转成普通的引号字符
+		\t 将字符t转成制表符（tab键的效果）
+
+		练习：打印 welcome to chi\na
+	（2）字符串api
+
+		+-------------------------------
+		| length  获取字符串的长度
+		| charAt  查看下标对应的字符
+		| charCodeAt()  查看某个字符的Unicode码
+		| indexOf()  查看某个字符第一次的下标，找不到返回-1
+		| lastIndexOf()  查看最后一个字符的下标,找不到返回-1
+		| toUpperCase()	将英文字母转成大写
+		| toLowerCase()	将英文字母转成小写
+		| slice(start,end) 
+		| 	截取字符串，start是开始的下标，end是结尾的下标，不包含end本身
+		| substr(start,count) 截取字符串，start是开始的下标，count是截取的长度
+		| split() 按照指定的字符将字符串分割成数组
+		+--------------------------------------------------
+
+		声明一个变量存储邮箱，检验邮箱是否为合法的邮箱（是否有@符）
+
+		function isEmail(email){
+			return email.indexOf("@") == -1;
+		}
+
+		console.log(isEmail);
+
+		练习：声明变量保存邮箱，从中分别截取用户名和域名
+		tom123@sina.com
+
+		var email = "tom123@sina.com";
+		var username = email.slice(0,email.indexOf("@"));
+		var password = email.slice(email.indexOf("@")+1);
+		console.log(username,password);
+
+		练习：声明变量保存身份证号，从中截取出出生的年月日，获取性别，打印1997年01月20日
+		女
+
+		var identity = "110482199701203789";
+		var year = identity.substr(6,4);
+		var month = identity.substr(10,2);
+		var day = identity.substr(12,2);
+		var sex = identity.substr(-2,1);
+
+		console.log(year+"年"+month+"月"+day+"日"+sex%2==0?"男":"女");
+
+4. 匹配模式(掌握)
+	作用：用于查找，替换字符
+	replace(value1,value2) 查找并替换。value1要查找的字符串，value2要替换掉的字符串。
+	value1既可以使用字符串形式，也可以使用正则表达式形式  /tom/ig
+		g --> global 全局查找
+		i --> ignore 忽略大小写
+
+	match(value)	查找匹配的字符串，返回数组
+	search(value)	查找匹配的第一个字符，返回下标，找不到返回-1
+
+5. Math对象
+
+	+---------------------------------------
+	| Math对象不需要使用new来创建，可以直接使用
+	| Math.PI		获取圆周率
+	| abs()	 		取某个数字的绝对值
+	| ceil()	 	向上取整
+	| floor()	 	向下取整
+	| round() 		四舍五入取整
+	| max() 		取一组数字的最大值
+	| min()    		取一组数字的最小值
+	| pow()    		取x的y次幂
+	| random()	 	取随机数  范围0~1
+	+------------------------------------------
+
+	学习一个api
+		名称
+		参数
+		作用
+		返回值
+
+
+课后任务
+	（1）复习
+	（2）练习
+		将一句英文的每个单词首字母大写，其余小写
+		创建数组，包含a~z和0~9，在数组中随机取4个字符，放到一个新数组中
+
+	（3）预习date()对象
+
+	var word = "how are you";
+	word = word.split(" ");
+	for (var w in word) {
+		word[w] = word[w].substr(0, 1).toUpperCase() + word[w].substr(1).toLowerCase();
+	}
+	console.log(word.join(" "));
+
+	var arr = "abcdefghijklmnopqrstuvwxyz0123456789";
+	for (var i = 0, newArr = []; i < 4; i++) {
+		newArr.push(arr.substr(Math.floor(Math.random() * (arr.length - 1)), 1));
+	}
+	console.log(newArr);

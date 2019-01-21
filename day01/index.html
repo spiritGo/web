@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>雨</title>
+	<style>
+		body{
+			padding:0;
+			margin:0;
+			/* overflow:hidden; */
+			background:#000;
+			-webkit-animation:mycol 5s infinite;
+		}
+		@keyframes mycol{
+			%0{
+				background:#000;
+			}
+			%100{
+				background:#666;
+			}
+		}
+		.all{
+			perspective:800px;
+		}
+		.photos{
+			width:133px;
+			height:220px;
+			position:relaticve;
+			margin:150px auto;
+			transform-style:preserve-3d;
+			transform:rotateX(-10deg) rotateY(0deg);
+			
+		}
+		.photo{
+			display:inline-block;
+			position:absolute;
+			width:133px;
+			height:200px;
+			background-color:yellow;
+			position:1s;
+			
+		}
+		.photo img{
+			width:133px;
+			height:200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="all">
+		<div class="photos">
+			<div class="photo"><img src="./img/1.jpg"></div>
+			<div class="photo"><img src="./img/2.jpg"></div>
+			<div class="photo"><img src="./img/3.jpg"></div>
+			<div class="photo"><img src="./img/4.jpg"></div>
+			<div class="photo"><img src="./img/5.jpg"></div>
+			<div class="photo"><img src="./img/6.jpg"></div>
+			<div class="photo"><img src="./img/7.jpg"></div>
+			<div class="photo"><img src="./img/8.jpg"></div>
+			<div class="photo"><img src="./img/9.jpg"></div>
+			<div class="photo"><img src="./img/10.jpg"></div>
+		</div>
+	</div>
+</body>
+<script>
+	var photos= document.querySelector(".photos");
+	var photo = photos.querySelectorAll(".photo");
+	var deg = 360/photo.length;
+	for(var i=0;i<photo.length;i++){
+		photo[i].style.transform ="rotateY("+i*deg+"deg) translateZ(350px)";
+		photo[i].style.transition= "1s"+(photo.length-i)*0.1+"s";
+	}
+	document.onmousedown = function(e){
+		dx = e.clientX;
+		dy = e.clientY;
+
+		x = -10;
+		y = 0;
+		this.onmousemove = function(e){
+			mx = e.clientX;
+			my = e.clientY;
+			ox = mx - dx;
+			oy = my - dy;
+			x -= oy*0.2;
+			y += ox*0.2;
+			console.log(x,y);
+			photos.style.transform = "rotateX("+x+"deg) rotateY("+y+"deg)";
+			dx = mx;
+			dy = my;
+		}
+		this.onmouseup =function(){
+			var Inter = setInterval(function(){
+				ox = ox*0.8;
+				oy = oy*0.8;
+
+				x = x- oy*0.2;
+				y = y+ ox*0.2;
+				photos.style.transform = "rotateX("+x+"deg) rotateY("+y+"deg)";
+				if(Math.abs(x)<0.1 &&Math.abs(y)<0.1){
+					setInterval(Inter);
+				}
+			},13) 
+			this.onmousemove = null;
+		}
+	}
+
+</script>
+
+</html>

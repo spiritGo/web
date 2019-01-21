@@ -1,0 +1,42 @@
+<!-- demo.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demo</title>
+</head>
+<body>
+<form method="GET" action="" >
+	<input type="text" name="username">
+	<input type="password" name="password">
+	<input type="submit" name="">
+</form>
+
+<script type="text/javascript">
+	
+	// var xrt;
+	// if (window.XMLHttpRequest) {
+	// 	xrt = new XMLHttpRequest();
+	// }else {
+
+	// 	xrt = new ActiveXObject("Microsoft.XMLHTTP");
+	// }
+
+	var txt = document.querySelector("input[type='text']");
+	var pwd = document.querySelector("input[type='password']");
+	var submit = document.querySelector("input[type='submit']");
+	var path ="demo.html?username="+ txt.value+"&password="+pwd.value;
+
+	submit.onclick =function (){
+		console.log(path);
+	}
+	// xrt.open("GET",path,true);
+	// xrt.send(null);
+	// console.log(path);
+
+	// xrt.onreadystatechange=function(){
+
+	// 	console.log(this.responseText);
+	// }
+</script>
+</body>
+</html>

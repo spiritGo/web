@@ -1,0 +1,90 @@
+笔记（2018.12.19）
+
+
+1. 项目中如何保存数据
+	内存、文件、云服务器、数据库服务器
+
+2. 数据库概述（database）
+	数据库：以特定的结构批量存储业务数据的软件
+	数据库的发展历史：
+		网状数据库-> 层次型数据库->关系型数据库（当前主流）->非关系型数据库
+		关系型数据库中数据的逻辑结构：
+		Server => DataBase => table => Row => column
+
+		常见的关系型数据库
+		SQlite-微型数据库，常用于移动设备
+		MySQL-开元中小型数据库，可用于各种操作系统（MariaDB）
+		PostgreSQL-开元中小型数据库
+		SQL Server-Microsoft开发的中型数据库，只用于Windows系统
+		Oracle-Oracle公司开发的中大型数据库，可用于各种操作系统
+		DB2-IBM公司开发的中大型数据库，长与IBM服务器搭配
+
+3.使用MySQL数据库
+	oracle分支 https://www.mysql.com/
+	Martin分支 https://mariadb.org/
+
+	xampp是一个服务器套装，包含有MySQL、Apache、PHP等
+	下载：https://xampp.org/
+
+	（1）mySQL的部署结构
+		服务器软件：负责存储/维护数据-银行服务器机房 -> mysqld.exe
+		客户端软件：负责向服务器发起增删改查命令-ATM机 -> mysql.exe
+
+	（2）使用MySQL客户端连接到服务器端
+		mysql.exe -h[ip地址] -P(port端口号) -u[用户名，默认root] -p[密码，默认空]	=> hPup
+		退出：quit
+		简化：mysql -uroot
+4. mysql常用的管理命令
+	quit; 退出服务器连接
+	show databases; 显示数据库服务器上所有的数据库
+	use (\u) Use another database. Takes database name as argument.
+	show tables：显示所有数据库表
+	desc 表名称：查询表内的表头
+
+5.SQL命令
+	SQL:structured Query language，结构化查询语言，用于操作关系型数据库服务器中的数据-增删改查
+	SQL命令的两种执行方式
+	（1）交互模式：客户端输入一行，点击回车，服务器执行一行，适用于临时性的查看数据
+	（2）脚本模式：客户端把要执行的多行命令编写在一个脚本文件中，一次性提交给服务器执行。适用于批量的操作数据
+		mysql -uroot < 路径
+
+	sql语法规范：
+	（1）每条SQL语句以英文的分号作为结束，一条语句可以跨越多行，见到分号认为结束
+	（2）假如某一条语句出现语法错误，则此条语句以及后边所有的语句都不会执行
+	（3）SQL命令不区分大小，习惯上数据库的关键字用大写，非关键字小写
+	（4）SQL命令中可以使用单行注释（#...）和多行注释（/*...*/）,注释的内容不会
+		 被服务器执行
+
+日常开发中常用的SQL语句
+（1）丢弃指定的数据库，如果存在
+	DROP DATABASE IF EXISTS jd;
+（2）创建新的数据库
+	CREATE DATABASE jd;
+（3）进入刚刚创建的数据
+	USE jd
+（4）创建保存数据的表
+	CREATE TABLE student(
+		sid INT,
+		name VARCHAR(6),
+		sex VARCHAR(1),
+		score INT
+	);
+
+（5）向数据库表中插入数据<增>
+	INSERT INTO student VALUES("");
+
+（6）查询表中所有的数据<查>
+	SELECT * FROM 表名;
+
+（7）删除数据<删>
+	delete from 表名 条件(where eid = ?);
+ 
+（8）修改数据<改>
+	update 表名 set 要修改的数据 where 条件;
+
+
+复习今天的内容，再次编写代码
+编写脚本文件xz.sql,创建数据库xz,进入该数据库，创建数据表user，包含uid、uname、upwd、phone、sex、user_name(真是姓名) 、register_time、is_online
+插入5条数据。删除1条数据。修改2条数据。最后查询结果
+预习
+

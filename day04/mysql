@@ -1,0 +1,23 @@
+mysql
+MySQL语法
+ok,今天就来学习下MySQL吧！
+
+mysql数据库的基本操作
+查看数据库show databases;
+查看表show tables
+查看表结构desc 表名
+进入数据库use 数据库名
+
+1.数据库的创建：create database 数据库名;
+eg:创建一个名为student的数据库
+create database student;
+
+2.进入数据库：use 数据库名;
+eg:进入名为student的数据库;
+use student;
+
+3.创建表：create table 表名(表的字段，格式：字段 字段值所属类型(文末会给出对应表));
+eg:创建一个名叫sorce的数据库表，字段有学号，数学成绩，语文成绩，英语成绩;
+create table sorce(uid int,math int,chinese int,english int);
+
+4.

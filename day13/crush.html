@@ -1,0 +1,87 @@
+<!-- crush.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>crush</title>
+	<style>
+		.box {
+			width:380px;/*190*/
+			height: 560px;/*280*/
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			/*background: red;*/
+			margin:auto;
+		}
+
+		.img_box {
+			position: relative;
+			left: 0;
+			background: url(484.jpg);
+			background-repeat: no-repeat;
+			right: 0;
+			float: left;
+			transition:all 5s linear;
+
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="box" id="box">
+		<div class="img_box"></div>
+	</div>
+	<script src="../jquery-3.2.1.min.js"></script>
+	<script>
+		var box = document.getElementById("box");
+		var imgBox = box.getElementsByClassName("img_box")[0];
+		var fragment = document.createDocumentFragment();
+
+		var centerX = box.getBoundingClientRect().left + box.getBoundingClientRect().width / 2;
+		var centerY = box.getBoundingClientRect().top + box.getBoundingClientRect().height / 2;
+		console.log(centerX, centerY);
+
+		var cell = 10;
+
+		imgBox.style.width = cell +"px";
+		imgBox.style.height = cell +"px";
+
+		var rn = parseInt(box.getBoundingClientRect().height / cell);
+		var cn = parseInt(box.getBoundingClientRect().width / cell);
+
+		console.log(rn, cn);
+
+		for (var r = 0; r < rn; r++) {
+			for (var c = 0; c < cn; c++) {
+				var cellEle = imgBox.cloneNode(true);
+				cellEle.style.backgroundPosition = "-"+cell * c + "px "+ "-"+cell * r + "px";
+				fragment.appendChild(cellEle);
+			}
+		}
+		box.appendChild(fragment);
+
+		function randomNum(min,max){
+			return Math.random()*(max-min)+min;
+		}
+
+		function disapper(){
+			$(".img_box").each(function() {
+				$(this).animate({
+					top:randomNum(-280,280)+"px",
+					left:randomNum(-190,190)+"px",
+					transform:"scale("+randomNum(0.3,0.8)+")",
+					opacity:0
+				});
+			});
+		}
+
+		$(".box").on("click",function(){
+			disapper();
+		});
+	</script>
+</body>
+</html>
