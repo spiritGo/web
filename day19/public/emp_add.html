@@ -1,0 +1,30 @@
+<!-- emp_add.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>emp</title>
+	<style>
+
+		form {
+			margin:50px auto;
+			width:300px;
+		}
+		input[type="text"] {
+			width:200px;
+			height:30px;
+		}
+	</style>
+</head>
+<body>
+	<form action="/add" method="post">
+		编号:<input type="text" name="eid"><br>
+		姓名:<input type="text" name="ename"><br>
+		性别:<input type="text" name="sex"><br>
+		生日:<input type="text" name="birthday"><br>
+		工资:<input type="text" name="salary"><br>
+		部门编号:<input type="text" name="deptId"><br>
+		<input type="submit">
+	</form>
+</body>
+</html>

@@ -1,0 +1,95 @@
+笔记
+
+1. express中的路由
+	浏览器向web服务器发请求，web服务器要根据请求的方法和请求的url来做出响应
+	路由三要素：请求的方法，请求的url，响应
+	GET请求
+	+----------------------------------------------------------
+	| 响应对象 res
+	| 	  res.send()  	  响应文本，只能响应一次，如果是数字认为状态码
+	| 	  res.sendFile()  响应文件，必须使用绝对路径（__dirname）
+	| 	  res.redirect()  跳转，响应的重定向
+	| 请求的对象 req
+	| 	  req.method  	  请求的方法
+	| 	  req.url		  请求的url
+	| 	  req.headers 	  请求的头信息
+	|     req.query       获取查询字符串中的数据
+	+-------------------------------------------------------------
+	POST请求和get请求
+	get请求以查询字符串的形式传递数据，服务器端使用req.query获取数据，格式为对象
+
+	post请求现阶段只能通过表单提交传递数据，服务器端使用事件形式获取数据，格式为查询字符串，需要借助查询字符串模块解析为对象
+	req.on("data",(buf)=>{
+		buf.toString()//buf是buffer数据，转换后位查询字符串
+	});
+
+	对比post和get两种请求方法
+		post传递数据安全性相对高，但是速度比较慢；登录，注册。。。
+		get传递数据安全性相对低，但是速度比较快；搜索，检索。。。
+
+3.使用路由传递数据
+	设置路由中接受数据的名称
+	server.get("/detail/:lid",(req,res)=>{
+		req.params//获取路由传递的数据，格式为对象
+	
+	});
+	浏览器请求
+	hppt://127.0.0.1:8080/detail/26
+	26就是传递的数据，会被lid所接受
+
+4.路由器
+	路由在使用过程中，不同模块下的路由可能出现相同的URL
+	把同一个模块的路由挂载到特定的前缀
+	eg:/product/list
+
+	路由器就是一个js文件，把同一模块下的路由写到一起
+	const express = require("express");
+	const router = express.Router();//创建一个空的路由器对象
+	router.get("/list",(req,res)=>{});//往路由中添加路由
+	module.exports = router;
+	在web服务器下使用路由器
+	const productRouter = require("./product.js");
+	server.use("/product",productRouter);//把商品路由器挂载到/product下，路由访问形式/product/list
+
+5.中间件
+	中间件作用就是为了主要的业务逻辑所服务
+	分为应用级中间件、路由级中间件、内置中间件、第三方中间件、错误处理中间件
+
+	（1）应用级中间件
+		每一个中间件就是一个回调函数，需要配合其他的中间件或路由使用
+		server.use(()=>{});//拦截所有的路由
+		server.use(url,()=>{});//拦截指定url的路由
+
+	（2）路由级中间件
+	用于在服务器中将路由器挂载到特定的url
+	server.use("/user",userRouter);
+
+	------------------------------练习-----------------------------
+	练习：创建以下路由
+		get  /index  响应文本“这是首页”
+		get  /login	 响应文件“login.html”
+		get  /study	 跳转到。。
+		get  /       跳转到index
+
+	练习：创建购物车路由，请求方法get，请求url/shopping,传递商品的编号（lid），价格price、名称name
+
+	练习：创建路由，get /view 初始化一个num为0,在中间件中让num+1，在路由中将num响应到浏览器
+
+	课后任务、
+
+	(2)课后任务 
+	创建web服务器,请求得到html文件 ,在文本框中输入身份证号,在身份证号提取身份证年月日和性别,在路由器中响应到浏览器中
+	form 输入身份证点查询 服务器端响应哪年哪月哪日
+
+	const express = require("express");
+	var server = express();
+	server.listen(8080);
+	var router = server.Router();
+
+	server.use("/verify",(req,res)=>{
+		console.log(req.query);
+	}));
+
+	router.get("/verify",(req,res)=>{
+		res.sendFile();
+	});

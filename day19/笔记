@@ -1,0 +1,56 @@
+笔记
+
+1. 内置中间件
+	在express下只有一个内置的中间件
+	servar.use(express.static("要托管的目录"));
+	托管静态资源到某一个目录下，如果浏览器请求静态资源，则会自动到该目录下寻找，无需添加路由
+	静态资源：HTML,css,img...
+	+-------------------------------------------------------------
+	| 注意:创建服务器必须在该nodejs文件的根目录下创建,否则访问不到文件
+	+---------------------------------------------------------------
+
+2. body-parse 第三方中间件
+	作用:将post请求的数据解析为对象
+	使用步骤
+		const bodyParser = require("body-parser");
+		server.use(bodyParser.urlencoded({
+			extended:false
+		}));
+		urlencoded  可以将数据解析为对象
+		extended:false  不使用第三方的qs模块,而是使用querystring模块将数据解析为对象
+
+	在路由中获取post请求的数据
+	req.body  返回对象
+
+	req.query  获取get请求传递的数据
+	req.params  获取路由传递的数据
+	req.body  获取post请求传递的数据
+
+3. mysql模块
+	增 INSERT INTO emp VALUES(),(),()...
+	删 DELETE FORM emp WHERE eid=1;
+	改 UPDATE emp SET salary=9000,sex=0 WHERE eid=2;
+	查 SELECT * FROM emp LIMIT 0,5;
+ 
+	(1)普通连接
+		var connection = mysql.createConnection({});创建连接对象,参数中提供服务器的IP,端口,用户名,
+		密码,要使用的数据库名称
+		connection.connect();执行连接
+		connection.query(SQL,callback);执行SQL语句,callback是回调函数,用于获取SQL语句的执行结果
+		connection.end();执行完所有SQL语句,关闭连接
+
+	(2)连接池
+		var pool = mysql.createPool({});创建连接池,参数中提供服务器的IP,端口,用户名,密码,
+		要使用的数据库名称,设置连接池的大小
+		pool.query(sql,callback)执行sql语句,callback是回调语句,用于获取SQL语句的执行结果
+
+
+
+
+	-------------------------------练习------------------------------
+	练习:创建web服务器,托管静态资源到public下,在public下创建login.HTML文件,包含有用户名和密码,点击提交
+	(post,/mylogin),创建对应的路由
+	03_post_data.js
+
+	(1)复习
+	(2)创建web服务器托管到public下,创建文件emp_add.html,点击提交(post/add)将数据添加到tedu下的emp表中

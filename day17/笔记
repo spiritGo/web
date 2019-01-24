@@ -19,11 +19,107 @@
 		fs.appendFile("路径",数据,callback);/fs.appendFileSync(路径，数据);
 		如果文件不存在，会创建文件，如果文件存在，会在末尾追加写入
 
+	（6）读取文件
+		readFile(路径，callback);/readFileSync(路径)
+		读取的数据格式是buffer
 
+	（7）删除文件
+		unlink(路径,callback);/unlinkSync(路径)
+		i++		会自动转换成为数值型
 
+2. http协议
+	是浏览器和web服务器之间的通信协议
+	（1）通用头信息 
+		+------------------------------------------------
+		| Request URL:请求的url，获取服务器的哪些内容
+		| Request Method:请求的方法 GET/POST
+		| Status Code:响应的状态码
+		| 200系列：服务端成功的响应
+		| 300系列：响应的重定向
+		| 400系列：浏览器端错误
+		| 500系列：服务器端的错误
+		| Remote Address:请求的服务器的ip地址和端口
+		+----------------------------------------------
+	（2）响应头信息
+		+----------------------------------------------
+		| Connection:连接方式，keep-alive持续连接
+		| Content-Type:响应的文件类型
+		| Content-Encoding:响应时的压缩类型 gzip
+		| Transfer-Encoding:传输方式   Chunked 分段传输
+		| Location:响应重定向的时候，跳转的url
+		+------------------------------------------------
+	（3）请求头信息
+		+------------------------------------
+		| Accept:浏览器接受的文件的类型有哪些
+		| Accept-Encoding:接受的压缩类型
+		| Accept-Language:接受的语言
+		| User-Agent:当前使用的浏览器
+		+----------------------------------
+	（4）请求主体
+		可有可无，用于客户端向服务器端传递数据
+
+3. http模块
+	既可以模拟浏览器向web服务器发请求，也可以创建web服务器
+	（1）模拟浏览器
+		http.get(url,callback);
+		get：请求的方法
+		url: 请求的url
+		callback：回调函数，获取服务器响应的内容
+			res  响应的对象
+				statusCode	响应的状态码
+				res.on("data",(buffer)=>{})
+				使用事件来获取服务器端响应的数据
+				参数buffer就是响应的数据，格式为buffer
+
+	（2）创建web服务器
+		var server = http.createServer();//创建一个web服务器
+		server.listen(8888);//分配端口，监听8888端口
+		server.on("request",(req,res)=>{});
+		接受浏览器的请求，是一个事件，只要有请求，自动执行
+		req  请求的对象
+			url  请求的url，端口后的部分，默认/
+			method  请求的方法，直接在浏览器地址栏输入，是用get
+			headers  请求的头信息
+		res  响应的对象
+			res.writeHead(状态码，对象); //设置响应的状态码和头信息//从定向时状态码必须是300系列
+			res.write(文本); //响应文本
+			res.end(); //告诉浏览器响应结束
+
+5. express 框架
+	基于nodejs，用于创建web服务器的框架
+	http://www.expressjs.com.cn
+	npm install express
+	const express = require("express");
+	var server = express();//创建web服务器
+	server.listen(8080);//监听端口
 
 
 	---------------------------练习-------------------------------
 	练习：使用文件操作创建文件data.txt,写入一个对象
 	var person = {eid:1,ename:"tom",sex:"男"}
 	fs.writeFileSync("data.txt",person);
+
+	练习：判断num.txt是否存在，如果不存在，则创建该文件并写入数据0；读取num.txt的内容，让读取的值加1.打印出来，把读取的值在此写入num.txt中
+
+	const FILE_NAME = "num.txt";
+	fs.unlinkSync(FILE_NAME);
+	if (!fs.existsSync(FILE_NAME)) {
+		fs.writeFileSync(FILE_NAME, 0);
+		var b = fs.readFileSync(FILE_NAME);
+		fs.appendFileSync(FILE_NAME, Number(b)+1);
+	}
+
+	练习：创建web服务器，监听8081端口，使用事件来接受浏览器请求，打印请求的方法和url
+	http://127.0.0.1:8081/admin/login.html
+	http://localhost:8081/member/shopping.html
+
+	练习：使用http模块创建web服务器，根据请求的url响应不同的内容
+	/login  响应文本this is login page
+	/index  响应文本this is home page
+	/study  跳转到学子商城
+	/       跳转到/index
+	如果以上都没有  跳转到/notfound
+	/notfound  响应文本  404 not found
+
+	预习express的路由，中间件
+	复习

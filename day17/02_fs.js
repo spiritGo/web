@@ -68,4 +68,24 @@ const fs = require("fs");
 // }
 // fs.appendFileSync("data.txt","}");
 
-fs.appendFileSync("data.csv","Tom");
+// fs.appendFileSync("data.csv","Tom");
+
+// fs.readFile("num.txt",(err,data)=>{
+// 	if (err) throw err;
+// 	//data读取的数据是buffer格式
+// 	console.log(data);
+// });
+
+// var buffer = new Buffer("A");
+// console.log(buffer);
+
+// fs.unlink("num.txt", (err) => {
+// 	if(err) throw err;
+// });
+const FILE_NAME = "num.txt";
+fs.unlinkSync(FILE_NAME);
+if (!fs.existsSync(FILE_NAME)) {
+	fs.writeFileSync(FILE_NAME, 0);
+	var b = fs.readFileSync(FILE_NAME);
+	fs.appendFileSync(FILE_NAME, Number(b)+1);
+}
