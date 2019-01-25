@@ -14,16 +14,23 @@ var pool = mysql.createPool({
 	connectionLimit:20
 });
 
-server.use(bodyParse.urlencoded({
-	extended:false
-}));
+// server.use(bodyParse.urlencoded({
+// 	extended:false
+// }));
 
 server.use(express.static("public"));
 
+var qs = require("querystring");
+
 server.post("/add",(req,res)=>{
-	pool.query("INSERT INTO emp SET ?",[req.body],(err,data)=>{
-		if (err) throw err;
-		if (data.affectedRows>0) res.send("插入数据成功"+req.body.eid);
-		console.log(data);
-	});
+	// pool.query("INSERT INTO emp SET ?",[req.body],(err,data)=>{
+	// 	if (err) throw err;
+	// 	if (data.affectedRows>0) res.send("插入数据成功"+req.body.eid);
+	// 	console.log(data);
+	// });
+	req.on("data",(bug)=>{
+		console.log(qs.parse(bug.toString()));
+		res.send(qs.parse(bug.toString()));
+	})
+	
 });
